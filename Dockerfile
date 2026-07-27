@@ -12,4 +12,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 
-CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ./start_all.sh"]
+CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /data/install/setup.bash && ./start.sh"]
