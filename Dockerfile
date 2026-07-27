@@ -11,5 +11,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-cv-bridge \
     && rm -rf /var/lib/apt/lists/*
 
+WORKDIR /data
 
 CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /data/install/setup.bash && ./start.sh"]

@@ -1,7 +1,16 @@
 name: Build Docker image
 
 on:
-  push
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Target platform
+        required: true
+        default: linux/arm64
+        type: choice
+        options:
+          - linux/arm64
+          - linux/amd64
 
 permissions:
   contents: read
