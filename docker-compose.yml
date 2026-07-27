@@ -1,0 +1,22 @@
+services:
+  ros2_node:
+    image: ghcr.io/robocoding-edu/edutracker_split:latest
+    pull_policy: always
+
+    network_mode: "host"
+    ipc: host
+    pid: host
+    privileged: true
+
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+      - "/dev/ttyUSB1:/dev/ttyUSB1"
+
+    volumes:
+      - /data:/data:ro
+      - /dev/sensors:/dev/sensors:ro
+      - /sys:/sys:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+    restart: always
