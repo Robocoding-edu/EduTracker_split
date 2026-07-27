@@ -13,7 +13,7 @@ services:
       - "/dev/ttyUSB1:/dev/ttyUSB1"
 
     volumes:
-      - /data:/data:ro
+      - ./data:/data:ro
       - /dev/sensors:/dev/sensors:ro
       - /sys:/sys:ro
       - /etc/localtime:/etc/localtime:ro

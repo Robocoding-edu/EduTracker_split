@@ -1,2 +1,2 @@
-#!bin/bash
-echo started
+#!/bin/bash
+echo "started"
