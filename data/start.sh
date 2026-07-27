@@ -1,16 +1,40 @@
 #!/bin/bash
 
-grep -qxF '#include <pthread.h>' /ros2_ws/src/ldlidar_stl_ros2/ldlidar_driver/src/logger/log_module.cpp || \
-sed -i '1s/^/#include <pthread.h>\n/' /ros2_ws/src/ldlidar_stl_ros2/ldlidar_driver/src/logger/log_module.cpp
+grep -qxF '#include <pthread.h>' /data/src/ldlidar_stl_ros2/ldlidar_driver/src/logger/log_module.cpp || \
+sed -i '1s/^/#include <pthread.h>\n/' /data/src/ldlidar_stl_ros2/ldlidar_driver/src/logger/log_module.cpp
+
+
+if [ ! -f "/data/install/setup.bash" ]; then
+    echo "⚠️ ROS2 workspace не собран. Запускаю colcon build..."
+
+    cd /data || exit 1
+
+    source /opt/ros/jazzy/setup.bash
+
+    colcon build \
+        --parallel-workers 1 \
+        --symlink-install
+
+    if [ $? -ne 0 ]; then
+        echo "❌ Ошибка сборки colcon. Завершение."
+        exit 1
+    fi
+
+    echo "✅ Сборка завершена успешно."
+else
+    echo "✅ ROS2 workspace уже собран."
+fi
+
+
 
 source /opt/ros/jazzy/setup.bash
-source /ros2_ws/install/setup.bash
+source /data/install/setup.bash
 
 echo "=== 1. Запуск драйвера лидара с автореанимацией ==="
 (
     while true; do
         ros2 launch ldlidar_stl_ros2 ld19.launch.py
-        echo "⚠️ Лидар упал из-за лага CPU! Воскрешаю..."
+        echo "⚠️ Лидар упал! Воскрешаю..."
         sleep 2
     done
 ) &
