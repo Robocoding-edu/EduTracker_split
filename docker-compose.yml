@@ -8,6 +8,9 @@ services:
     pid: host
     privileged: true
 
+    environment:
+      - ROS_DOMAIN_ID=123
+
     devices:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
       - "/dev/ttyUSB1:/dev/ttyUSB1"

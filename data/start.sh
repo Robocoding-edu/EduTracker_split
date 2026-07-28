@@ -40,26 +40,31 @@ echo "=== 1. Запуск драйвера лидара с автореаним�
 ) &
 LIDAR_PID=$!
 
-echo "=== 2. Запуск Slam Toolbox ==="
-ros2 launch slam_toolbox online_sync_launch.py \
-  slam_params_file:=/data/configs/my_slam_params.yaml &
-SLAM_PID=$!
-sleep 4
 
 
-echo "=== 3. Запуск ROS-ноды камеры ==="
-python3 /data/camera_driver.py &
+
+echo "=== 2. Запуск ROS-ноды камеры ==="
+(
+    while true; do
+        python3 /data/camera_driver.py &
+        echo "⚠️ Камера упала! Воскрешаю..."
+        sleep 2
+    done
+) &
 CAMERA_DRIVER_PID=$!
-sleep 1
 
 
-echo "=== 5. Запуск Serial моста с Atmega2560 ==="
-python3 /data/serial_bridge.py &
+echo "=== 3. Запуск Serial моста с Atmega2560 ==="
+(
+    while true; do
+        python3 /data/serial_bridge.py &
+        echo "⚠️ Мост упал! Воскрешаю..."
+        sleep 2
+    done
+) &
 SERIAL_PID=$!
-sleep 1
 
 
 wait $LIDAR_PID \
-     $SLAM_PID \
      $CAMERA_DRIVER_PID \
      $SERIAL_PID
