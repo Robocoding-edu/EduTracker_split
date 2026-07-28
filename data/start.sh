@@ -11,7 +11,7 @@ if [ ! -f "/data/install/setup.bash" ]; then
 
     source /opt/ros/jazzy/setup.bash
 
-    colcon build \
+    sudo colcon build \
         --parallel-workers 1 \
         --symlink-install
 
