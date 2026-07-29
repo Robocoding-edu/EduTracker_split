@@ -11,8 +11,7 @@ def generate_launch_description():
             package="nav2_controller",
             executable="controller_server",
             output="screen",
-            parameters=[params_file],
-            remappings=[("/cmd_vel", "/cmd_vel_nav")]
+            parameters=[params_file]
         ),
         Node(
             package="nav2_planner",

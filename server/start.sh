@@ -2,12 +2,6 @@
 
 echo "=== Запуск системы ==="
 
-start_bridge_cmd_vel() {
-    echo "=== Запуск cmd_vel relay ==="
-    ros2 run topic_tools relay /cmd_vel_nav /cmd_vel &
-    BRIDGE_CMD_VEL_PID=$!
-}
-
 start_opencv() {
     echo "=== Запуск OpenCV ==="
     python3 ./data/openCV.py &
@@ -79,20 +73,17 @@ restart_service() {
 
 # === Старт всех сервисов ===
 
-start_bridge_cmd_vel
+start_opencv
 sleep 1
 
-start_opencv
+start_bridge
 sleep 2
 
-start_bridge
+start_slam
 sleep 3
 
-start_slam
-sleep 4
-
 start_nav2
-sleep 5
+sleep 4
 
 
 # === Консоль управления ===
