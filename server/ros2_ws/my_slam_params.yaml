@@ -1,0 +1,30 @@
+slam_toolbox:
+  ros__parameters:
+    # Базовые фреймы (замыкаем карту напрямую на робота)
+    map_frame: map
+    odom_frame: odom
+    base_frame: base_link
+    scan_topic: /scan
+    mode: mapping
+    use_sim_time: false
+    scan_buffer_size: 5
+    transform_publish_period: 0.1
+
+    # ВОЗВРАЩАЕМ СТРОКУ, ЧТОБЫ ВЕРНУТЬ ТОПИК /MAP:
+    stack_size_to_use: 40000000
+
+    # ВЫНУЖДАЕМ СЛАМ ОБНОВЛЯТЬ КАРТУ БЕЗ ОДОМЕТРИИ КОЛЕС:
+    minimum_travel_distance: 0.02   # Обновлять при смещении на 0 метров (от малейшего шума лазера)
+    minimum_travel_heading: 0.03    # Обновлять при повороте на 0 радиан
+    map_update_interval: 1.0       # Принудительно перерисовывать сетку 2 раза в секунду
+
+    # Настройки доверия лазеру (Scan Matcher)
+    use_scan_matching: true
+    scan_match_space_dim: 2
+    minimum_time_interval: 0.2
+
+    # Легковесность для Raspberry Pi 3B
+    throttle_scans: 2              # Обрабатывать каждый 4-й скан (разгружаем CPU)
+    resolution: 0.10               # Пиксель 10 см (оптимально для 1 Гб ОЗУ)
+    max_laser_range: 8.0
+    max_num_nodes: 500
