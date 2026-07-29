@@ -10,7 +10,7 @@ start_bridge_cmd_vel() {
 
 start_opencv() {
     echo "=== Запуск OpenCV ==="
-    python3 ./ros2_ws/openCV.py &
+    python3 ./data/openCV.py &
     OPEN_CV_PID=$!
 }
 
@@ -23,13 +23,13 @@ start_bridge() {
 start_slam() {
     echo "=== Запуск Slam Toolbox ==="
     ros2 launch slam_toolbox online_sync_launch.py \
-      slam_params_file:=./ros2_ws/my_slam_params.yaml &
+      slam_params_file:=./data/my_slam_params.yaml &
     SLAM_PID=$!
 }
 
 start_nav2() {
     echo "=== Запуск NAV2 ==="
-    ros2 launch ./ros2_ws/nav2_minimal.launch.py &
+    ros2 launch ./data/nav2_minimal.launch.py &
     NAV_PID=$!
 }
 
