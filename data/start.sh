@@ -33,7 +33,7 @@ source /data/install/setup.bash
 echo "=== 1. Запуск драйвера лидара с автореанимацией ==="
 (
     while true; do
-        ros2 launch ldlidar_stl_ros2 ld19.launch.py
+        ros2 launch ldlidar_stl_ros2 ./lidar.launch.py
         echo "⚠️ Лидар упал! Воскрешаю..."
         sleep 2
     done
