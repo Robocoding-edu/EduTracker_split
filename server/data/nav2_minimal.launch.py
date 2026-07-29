@@ -4,7 +4,8 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # Гарантированно правильный путь к файлу параметров
-    params_file = os.path.expanduser('./nav2_params.yaml')
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    params_file = os.path.join(current_dir, 'nav2_params.yaml')
 
     return LaunchDescription([
         Node(
