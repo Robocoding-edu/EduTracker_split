@@ -23,7 +23,7 @@ start_slam() {
 
 start_nav2() {
     echo "=== Запуск NAV2 ==="
-    ros2 launch ю/data/nav2_minimal.launch.py &
+    ros2 launch ./data/nav2_minimal.launch.py &
     NAV_PID=$!
 }
 
