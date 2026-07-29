@@ -1,30 +1,48 @@
 slam_toolbox:
   ros__parameters:
-    # Базовые фреймы (замыкаем карту напрямую на робота)
+    # Базовые фреймы
     map_frame: map
     odom_frame: odom
     base_frame: base_link
     scan_topic: /scan
     mode: mapping
     use_sim_time: false
-    scan_buffer_size: 5
-    transform_publish_period: 0.1
-
-    # ВОЗВРАЩАЕМ СТРОКУ, ЧТОБЫ ВЕРНУТЬ ТОПИК /MAP:
-    stack_size_to_use: 40000000
-
-    # ВЫНУЖДАЕМ СЛАМ ОБНОВЛЯТЬ КАРТУ БЕЗ ОДОМЕТРИИ КОЛЕС:
-    minimum_travel_distance: 0.02   # Обновлять при смещении на 0 метров (от малейшего шума лазера)
-    minimum_travel_heading: 0.03    # Обновлять при повороте на 0 радиан
-    map_update_interval: 1.0       # Принудительно перерисовывать сетку 2 раза в секунду
-
-    # Настройки доверия лазеру (Scan Matcher)
+    
+    # Увеличенный буфер для лучшей корреляции сканов
+    scan_buffer_size: 20
+    transform_publish_period: 0.05
+    
+    # Размер стека для публикации карты
+    stack_size_to_use: 80000000
+    
+    # Точное отслеживание движения
+    minimum_travel_distance: 0.01   # Обновлять при малейшем смещении
+    minimum_travel_heading: 0.005   # Чувствительность к поворотам
+    map_update_interval: 0.5        # Обновление карты каждые 0.5 сек
+    
+    # Scan Matcher - максимальная точность
     use_scan_matching: true
     scan_match_space_dim: 2
-    minimum_time_interval: 0.2
-
-    # Легковесность для Raspberry Pi 3B
-    throttle_scans: 2              # Обрабатывать каждый 4-й скан (разгружаем CPU)
-    resolution: 0.10               # Пиксель 10 см (оптимально для 1 Гб ОЗУ)
-    max_laser_range: 8.0
-    max_num_nodes: 500
+    minimum_time_interval: 0.1
+    
+    # Параметры для высокой точности (требует больше CPU)
+    throttle_scans: 1               # Обрабатывать ВСЕ сканы (макс. точность)
+    resolution: 0.05                # Пиксель 5 см (высокое разрешение)
+    max_laser_range: 12.0           # Максимальная дальность лазера
+    max_num_nodes: 2000             # Больше узлов для точной карты
+    
+    # Параметры оптимизации графа
+    use_loop_closure: true
+    loop_closure_threshold: 0.4
+    loop_closure_maximum_distance: 5.0
+    loop_closure_maximum_angle: 0.5
+    loop_closure_maximum_variance_ratio: 1.5
+    search_space_dimension: 2
+    search_grid_resolution: 0.1
+    search_grid_size: 0.3
+    search_grid_variance: 0.01
+    search_grid_iterations: 10
+    search_grid_explore_multifacility: false
+    outlier_max_rejection_distance: 1.0
+    outlier_ignored_outlier_count: 3
+    tf_buffer_duration: 10.0
