@@ -44,25 +44,15 @@ LIDAR_PID=$!
 
 
 echo "=== 2. Запуск ROS-ноды камеры ==="
-(
-    while true; do
-        python3 /data/camera_driver.py &
-        echo "⚠️ Камера упала! Воскрешаю..."
-        sleep 2
-    done
-) &
+python3 /data/camera_driver.py &
 CAMERA_DRIVER_PID=$!
+sleep 2
 
 
 echo "=== 3. Запуск Serial моста с Atmega2560 ==="
-(
-    while true; do
-        python3 /data/serial_bridge.py &
-        echo "⚠️ Мост упал! Воскрешаю..."
-        sleep 2
-    done
-) &
+python3 /data/serial_bridge.py &
 SERIAL_PID=$!
+sleep 2
 
 
 wait $LIDAR_PID \
