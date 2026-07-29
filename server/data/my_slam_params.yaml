@@ -17,7 +17,7 @@ slam_toolbox:
 
     # Точное отслеживание движения
     minimum_travel_distance: 0.03   # Обновлять при малейшем смещении
-    minimum_travel_heading: 0.02   # Чувствительность к поворотам
+    minimum_travel_heading: 0.03   # Чувствительность к поворотам
     map_update_interval: 0.5        # Обновление карты каждые 0.5 сек
 
     # Scan Matcher - максимальная точность
