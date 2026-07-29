@@ -31,9 +31,10 @@ source /opt/ros/jazzy/setup.bash
 source /data/install/setup.bash
 
 echo "=== 1. Запуск драйвера лидара с автореанимацией ==="
+cp ./lidar.launch.py /data/install/ldlidar_stl_ros2/share/ldlidar_stl_ros2
 (
     while true; do
-        ros2 launch ldlidar_stl_ros2 ./lidar.launch.py
+        ros2 launch ldlidar_stl_ros2 lidar.launch.py
         echo "⚠️ Лидар упал! Воскрешаю..."
         sleep 2
     done
