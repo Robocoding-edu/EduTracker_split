@@ -90,7 +90,7 @@ global_costmap:
     static_layer:
       plugin: "nav2_costmap_2d::StaticLayer"
       map_subscribe_transient_local: true
-      enabled: true
+      enabled: false
     obstacle_layer:
       plugin: "nav2_costmap_2d::ObstacleLayer"
       enabled: true
