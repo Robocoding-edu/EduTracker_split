@@ -25,7 +25,7 @@ class SerialBridgeNode(Node):
 
         # --- ФИЗИЧЕСКИЕ ПАРАМЕТРЫ РОБОТА ---
         self.wheel_diameter = 0.065  # 65 мм в метрах
-        self.wheel_separation = 0.195 # 195 мм в метрах
+        self.wheel_separation = 0.218 # 195 мм в метрах
         self.ticks_per_rev = 77.0     # 77 тиков на оборот
 
         self.last_cmd = None

@@ -20,8 +20,8 @@ controller_server:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
       desired_linear_vel: 0.8
       use_fixed_curvature_lookahead: true
-      lookahead_dist: 0.4
-      max_lookahead_dist: 0.6
+      lookahead_dist: 0.3
+      max_lookahead_dist: 0.5
       lookahead_time: 1.2
       transform_tolerance: 0.1
       use_velocity_scaled_lookahead_dist: false
@@ -58,7 +58,7 @@ local_costmap:
     height: 4
     resolution: 0.03
     robot_base_frame: base_link
-    robot_radius: 0.20
+    footprint: "[[-0.12, -0.15], [-0.12, 0.15], [0.12, 0.15], [0.12, -0.15]]"
     global_frame: odom
     rolling_window: true
     plugins: ["obstacle_layer", "inflation_layer"]
@@ -83,7 +83,7 @@ global_costmap:
     use_sim_time: false
     global_frame: map
     robot_base_frame: base_link
-    robot_radius: 0.15
+    footprint: "[[-0.12, -0.15], [-0.12, 0.15], [0.12, 0.15], [0.12, -0.15]]"
     resolution: 0.03
     update_frequency: 2.0
     publish_frequency: 1.0
@@ -106,7 +106,7 @@ global_costmap:
     inflation_layer:
       plugin: "nav2_costmap_2d::InflationLayer"
       cost_scaling_factor: 5.0
-      inflation_radius: 0.5
+      inflation_radius: 0.35
 
 bt_navigator:
   ros__parameters:
