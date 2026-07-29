@@ -4,39 +4,42 @@ controller_server:
     controller_frequency: 30.0
     enable_stamped_cmd_vel: false
     cmd_vel_topic: /cmd_vel
-    controller_plugins: ["FollowPath"]
-    progress_checker_plugins: ["progress_checker"]
-    goal_checker_plugins: ["goal_checker"]
+    controller_plugins: [ "FollowPath" ]
+    progress_checker_plugins: [ "progress_checker" ]
+    goal_checker_plugins: [ "goal_checker" ]
+
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
       required_movement_radius: 0.2
       movement_time_allowance: 2.0
+
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
       xy_goal_tolerance: 0.20
       yaw_goal_tolerance: 0.35
       stateful: True
+
     FollowPath:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
-      desired_linear_vel: 0.5
+      desired_linear_vel: 0.5              # ⬆️ Было 0.5. Добавляем смелости!
       use_fixed_curvature_lookahead: false
-      lookahead_dist: 0.25
-      max_lookahead_dist: 0.4
-      lookahead_time: 1.2
-      transform_tolerance: 0.1
-      use_velocity_scaled_lookahead_dist: false
-      min_approach_linear_velocity: 0.15
-      approach_velocity_scaling_dist: 0.7
+      lookahead_dist: 0.5                  # ⬆️ Было 0.25. Убираем виляние, делаем путь плавнее
+      max_lookahead_dist: 1.0              # ⬆️ Было 0.4
+      lookahead_time: 1.5                  # ⬆️ Было 1.2
+      transform_tolerance: 0.2             # ⬆️ Было 0.1 (чуть больше запас по времени TF)
+      use_velocity_scaled_lookahead_dist: true # ⚡ ВКЛЮЧАЕМ! На скорости смотрит дальше
+      min_approach_linear_velocity: 0.2    # ⬆️ Было 0.15
+      approach_velocity_scaling_dist: 0.4  # ⬇️ Было 0.7. Теперь он будет тормозить только за 40 см до цели
       use_collision_detection: false
       max_allowed_time_to_collision_up_to_carrot: 1.0
       use_regulated_linear_velocity_scaling: true
       use_cost_regulated_linear_velocity_scaling: false
       regulated_linear_scaling_min_radius: 0.4
-      regulated_linear_scaling_min_speed: 0.2
-      use_rotate_to_heading: false
-      rotate_to_heading_min_angle: 0.8
-      max_angular_accel: 1.5
-      rotate_to_heading_angular_vel: 0.5
+      regulated_linear_scaling_min_speed: 0.3 # ⬆️ Было 0.2. Чтобы не сбрасывал газ в крутых поворотах
+      use_rotate_to_heading: true          # ⚡ ВКЛЮЧАЕМ! Чтобы не пытался проходить крутые углы "дужкой"
+      rotate_to_heading_min_angle: 0.5     # Если нужно повернуть больше чем на ~30 градусов, он встанет и повернется на месте
+      rotate_to_heading_angular_vel: 0.8   # Скорость поворота на месте (рад/с)
+      max_angular_accel: 1.0               # ⬇️ Было 1.5. Делаем разгон руля более плавным, без рывков
       goal_dist_tol: 0.20
 
 planner_server:
@@ -75,7 +78,7 @@ local_costmap:
         inf_is_valid: false
     inflation_layer:
       plugin: "nav2_costmap_2d::InflationLayer"
-      cost_scaling_factor: 5.0
+      cost_scaling_factor: 12.0
       inflation_radius: 0.35
 
 global_costmap:
@@ -105,7 +108,7 @@ global_costmap:
         inf_is_valid: false
     inflation_layer:
       plugin: "nav2_costmap_2d::InflationLayer"
-      cost_scaling_factor: 5.0
+      cost_scaling_factor: 12.0
       inflation_radius: 0.35
 
 bt_navigator:
