@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<package format="3">
+
+  <name>edutracker_description</name>
+  <version>0.0.1</version>
+
+  <description>
+    URDF/Xacro description package for EduTracker robot
+  </description>
+
+  <maintainer email="you@example.com">
+    Vitaly
+  </maintainer>
+
+  <license>Apache-2.0</license>
+
+
+  <!-- Сборка -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+
+  <!-- Запуск launch -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+
+  <!-- URDF -->
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+
+
+  <!-- RViz (не обязательно, но удобно) -->
+  <exec_depend>rviz2</exec_depend>
+
+
+  <!-- TF -->
+  <exec_depend>tf2</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
