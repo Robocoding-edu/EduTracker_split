@@ -1,13 +1,13 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="edutracker">
 
   <!-- ====== ПАРАМЕТРЫ ====== -->
 
-  <xacro:property name="body_radius" value="0.125"/>
-  <xacro:property name="body_height" value="0.05"/>
+  <xacro:property name="body_radius" value="0.125" />
+  <xacro:property name="body_height" value="0.05" />
 
-  <xacro:property name="wheel_radius" value="0.0325"/>
-  <xacro:property name="wheel_width" value="0.02"/>
+  <xacro:property name="wheel_radius" value="0.0325" />
+  <xacro:property name="wheel_width" value="0.02" />
 
   <!-- ====== BASE ====== -->
 
@@ -15,12 +15,10 @@
 
     <visual>
       <geometry>
-        <cylinder
-          radius="${body_radius}"
-          length="${body_height}"/>
+        <cylinder radius="${body_radius}" length="${body_height}" />
       </geometry>
 
-      <origin xyz="0 0 0"/>
+      <origin xyz="0 0 0" />
 
     </visual>
 
@@ -33,10 +31,10 @@
 
     <visual>
       <geometry>
-        <cylinder radius="0.035" length="0.05"/>
+        <cylinder radius="0.035" length="0.05" />
       </geometry>
 
-      <origin xyz="0 0 0"/>
+      <origin xyz="0 0 0" />
     </visual>
 
   </link>
@@ -44,11 +42,11 @@
 
   <joint name="laser_joint" type="fixed">
 
-    <parent link="base_link"/>
-    <child link="laser_link"/>
+    <parent link="base_link" />
+    <child link="laser_link" />
 
     <!-- 25 см выше базы -->
-    <origin xyz="0 0 0.25"/>
+    <origin xyz="0 0 0.25" />
 
   </joint>
 
@@ -59,7 +57,7 @@
 
     <visual>
       <geometry>
-        <box size="0.04 0.04 0.03"/>
+        <box size="0.04 0.04 0.03" />
       </geometry>
     </visual>
 
@@ -68,11 +66,11 @@
 
   <joint name="camera_joint" type="fixed">
 
-    <parent link="base_link"/>
-    <child link="camera_link"/>
+    <parent link="base_link" />
+    <child link="camera_link" />
 
     <!-- камера чуть сбоку и выше -->
-    <origin xyz="0.05 0 0.20"/>
+    <origin xyz="0.05 0 0.20" />
 
   </joint>
 
@@ -84,12 +82,10 @@
 
     <visual>
       <geometry>
-        <cylinder
-          radius="${wheel_radius}"
-          length="${wheel_width}"/>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
       </geometry>
 
-      <origin rpy="1.5708 0 0"/>
+      <origin rpy="1.5708 0 0" />
     </visual>
 
   </link>
@@ -97,12 +93,12 @@
 
   <joint name="left_wheel_joint" type="continuous">
 
-    <parent link="base_link"/>
-    <child link="left_wheel_link"/>
+    <parent link="base_link" />
+    <child link="left_wheel_link" />
 
-    <origin xyz="0 0.13 0"/>
+    <origin xyz="0 0.13 0" />
 
-    <axis xyz="0 1 0"/>
+    <axis xyz="0 1 0" />
 
   </joint>
 
@@ -112,12 +108,10 @@
 
     <visual>
       <geometry>
-        <cylinder
-          radius="${wheel_radius}"
-          length="${wheel_width}"/>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
       </geometry>
 
-      <origin rpy="1.5708 0 0"/>
+      <origin rpy="1.5708 0 0" />
 
     </visual>
 
@@ -126,12 +120,12 @@
 
   <joint name="right_wheel_joint" type="continuous">
 
-    <parent link="base_link"/>
-    <child link="right_wheel_link"/>
+    <parent link="base_link" />
+    <child link="right_wheel_link" />
 
-    <origin xyz="0 -0.13 0"/>
+    <origin xyz="0 -0.13 0" />
 
-    <axis xyz="0 1 0"/>
+    <axis xyz="0 1 0" />
 
   </joint>
 

@@ -30,7 +30,13 @@ fi
 source /opt/ros/jazzy/setup.bash
 source /data/install/setup.bash
 
-echo "=== 1. Запуск драйвера лидара с автореанимацией ==="
+
+echo "=== 1. Загрузка описания робота"
+ros2 launch edutracker_description robot_description.launch.py &
+ROBOT_DESCRIPTION_PID=$!
+sleep 2
+
+echo "=== 2. Запуск драйвера лидара с автореанимацией ==="
 cp ./lidar.launch.py /data/install/ldlidar_stl_ros2/share/ldlidar_stl_ros2
 (
     while true; do
@@ -44,18 +50,19 @@ LIDAR_PID=$!
 
 
 
-echo "=== 2. Запуск ROS-ноды камеры ==="
+echo "=== 3. Запуск ROS-ноды камеры ==="
 python3 /data/camera_driver.py &
 CAMERA_DRIVER_PID=$!
 sleep 2
 
 
-echo "=== 3. Запуск Serial моста с Atmega2560 ==="
+echo "=== 4. Запуск Serial моста с Atmega2560 ==="
 python3 /data/serial_bridge.py &
 SERIAL_PID=$!
 sleep 2
 
 
-wait $LIDAR_PID \
+wait $ROBOT_DESCRIPTION_PID \
+     $LIDAR_PID \
      $CAMERA_DRIVER_PID \
      $SERIAL_PID
