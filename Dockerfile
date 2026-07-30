@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-serial \
     python3-pip \
     python3-numpy \
+    ros-jazzy-xacro \
     ros-jazzy-cv-bridge \
     && rm -rf /var/lib/apt/lists/*
 
