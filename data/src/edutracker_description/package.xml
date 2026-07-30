@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <package format="3">
 
   <name>edutracker_description</name>
@@ -8,8 +8,8 @@
     URDF/Xacro description package for EduTracker robot
   </description>
 
-  <maintainer email="you@example.com">
-    Vitaly
+  <maintainer email="me@strunder.ru">
+    strunder
   </maintainer>
 
   <license>Apache-2.0</license>
