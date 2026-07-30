@@ -51,8 +51,15 @@ class ColorDetector:
             robot_y = -distance * math.sin(angle)
             objects.append((robot_x, robot_y))
             cv2.rectangle(output_frame, (x, y), (x + width, y + height), (0, 255, 0), 2)
-            cv2.putText(output_frame, f"RED OBJ: {distance:.2f}m", (x, max(y - 10, 0)),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 0), 1)
+            cv2.putText(
+                output_frame,
+                f"RED OBJ: {distance:.2f}m",
+                (x, max(y - 10, 0)),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.4,
+                (0, 255, 0),
+                1,
+            )
         return output_frame, objects
 
 
@@ -62,10 +69,15 @@ class OpenCVNode(Node):
         self.bridge = CvBridge()
         self.detector = ColorDetector()
         self.marker_id = 0
-        self.processed_publisher = self.create_publisher(Image, "/camera/image_processed", 1)
-        self.marker_publisher = self.create_publisher(Marker, "/robot/detected_objects", 10)
+        self.processed_publisher = self.create_publisher(
+            Image, "/camera/image_processed", 1
+        )
+        self.marker_publisher = self.create_publisher(
+            Marker, "/robot/detected_objects", 10
+        )
         self.subscription = self.create_subscription(
-            Image, "/camera/image_raw", self._on_image, 1)
+            Image, "/camera/image_raw", self._on_image, 1
+        )
         self.get_logger().info("OpenCV processor subscribed to /camera/image_raw")
 
     def _on_image(self, image_message):

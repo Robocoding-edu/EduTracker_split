@@ -37,7 +37,9 @@ class CameraDriver(Node):
         self._frame_lock = threading.Lock()
         self._latest_frame = None
         self._running = True
-        self._capture_thread = threading.Thread(target=self._capture_frames, daemon=True)
+        self._capture_thread = threading.Thread(
+            target=self._capture_frames, daemon=True
+        )
         self._capture_thread.start()
         self.timer = self.create_timer(1.0 / publish_rate, self._publish_frame)
         self.get_logger().info(f"Camera driver started: {self.stream_url}")
@@ -59,7 +61,9 @@ class CameraDriver(Node):
 
     def _publish_frame(self):
         with self._frame_lock:
-            frame = self._latest_frame.copy() if self._latest_frame is not None else None
+            frame = (
+                self._latest_frame.copy() if self._latest_frame is not None else None
+            )
         if frame is None:
             return
 

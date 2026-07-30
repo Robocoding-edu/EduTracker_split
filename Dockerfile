@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /data
 
 CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && \
-if [ -f /data/src/install/setup.bash ]; then \
+    if [ -f /data/src/install/setup.bash ]; then \
     source /data/src/install/setup.bash; \
-fi && \
-./start.sh"]
+    fi && \
+    ./start.sh"]
