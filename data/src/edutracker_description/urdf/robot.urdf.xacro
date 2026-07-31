@@ -3,26 +3,34 @@
 
   <!-- ====== ПАРАМЕТРЫ ====== -->
 
-  <xacro:property name="body_radius" value="0.125" />
-  <xacro:property name="body_height" value="0.05" />
+  <xacro:property name="body_radius" value="0.0775" />
+  <xacro:property name="body_height" value="0.245" />
 
   <xacro:property name="wheel_radius" value="0.0325" />
-  <xacro:property name="wheel_width" value="0.02" />
+  <xacro:property name="wheel_width" value="0.027" />
 
   <!-- ====== BASE ====== -->
 
-  <link name="base_link">
 
-    <visual>
-      <geometry>
-        <cylinder radius="${body_radius}" length="${body_height}" />
-      </geometry>
+  <link name="base_link"/>
 
-      <origin xyz="0 0 0" />
+  <link name="body_link">
+      <visual>
+        <geometry>
+          <cylinder radius="${body_radius}" length="${body_height}" />
+        </geometry>
 
-    </visual>
+        <origin xyz="-0.047 0 0.1225" />
 
+      </visual>
   </link>
+
+  <joint name="body_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
 
 
   <!-- ====== LIDAR ====== -->
@@ -46,7 +54,7 @@
     <child link="laser_link" />
 
     <!-- 25 см выше базы -->
-    <origin xyz="0 0 0.25" />
+    <origin xyz="-0.047 0 0.2755" />
 
   </joint>
 
@@ -96,7 +104,7 @@
     <parent link="base_link" />
     <child link="left_wheel_link" />
 
-    <origin xyz="0 0.13 0" />
+    <origin xyz="0 0.1155 0" />
 
     <axis xyz="0 1 0" />
 
@@ -123,7 +131,7 @@
     <parent link="base_link" />
     <child link="right_wheel_link" />
 
-    <origin xyz="0 -0.13 0" />
+    <origin xyz="0 -0.1155 0" />
 
     <axis xyz="0 1 0" />
 
