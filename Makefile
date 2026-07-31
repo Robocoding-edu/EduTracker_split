@@ -1,8 +1,5 @@
 
-update: docker-down restore pull setup reset
-
-docker-down:
-	docker compose down
+update: restore pull setup reset
 
 setup:
 	chmod +x ./server/start.sh
