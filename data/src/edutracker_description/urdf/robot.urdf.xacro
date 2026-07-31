@@ -9,6 +9,14 @@
   <xacro:property name="wheel_radius" value="0.0325" />
   <xacro:property name="wheel_width" value="0.027" />
 
+  <material name="green">
+    <color rgba="0 0.6 0 1"/>
+  </material>
+
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+
   <!-- ====== BASE ====== -->
 
 
@@ -21,7 +29,7 @@
         </geometry>
 
         <origin xyz="-0.047 0 0.1225" />
-        <material name="gray"/>
+        <material name="green"/>
 
       </visual>
   </link>
@@ -44,7 +52,7 @@
       </geometry>
 
       <origin xyz="0 0 0" />
-      <material name="gray"/>
+      <material name="black"/>
     </visual>
 
   </link>
@@ -69,7 +77,7 @@
       <geometry>
         <box size="0.04 0.04 0.03" />
       </geometry>
-      <material name="gray"/>
+      <material name="black"/>
     </visual>
 
   </link>
@@ -97,7 +105,7 @@
       </geometry>
 
       <origin rpy="1.5708 0 0" />
-      <material name="gray"/>
+      <material name="black"/>
     </visual>
 
   </link>
@@ -124,7 +132,7 @@
       </geometry>
 
       <origin rpy="1.5708 0 0" />
-      <material name="gray"/>
+      <material name="black"/>
 
     </visual>
 
