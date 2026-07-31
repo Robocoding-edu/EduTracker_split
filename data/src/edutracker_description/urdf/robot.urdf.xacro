@@ -10,7 +10,7 @@
   <xacro:property name="wheel_width" value="0.027" />
 
   <material name="green">
-    <color rgba="0 0.6 0 1"/>
+    <color rgba="0 0.6 0 0.8"/>
   </material>
 
   <material name="black">
@@ -75,7 +75,7 @@
 
     <visual>
       <geometry>
-        <box size="0.04 0.04 0.03" />
+        <box size="0.01 0.38 0.30" />
       </geometry>
       <material name="black"/>
     </visual>
@@ -89,7 +89,7 @@
     <child link="camera_link" />
 
     <!-- камера чуть сбоку и выше -->
-    <origin xyz="0.05 0 0.20" />
+    <origin xyz="-0.01 0 0.203" />
 
   </joint>
 
