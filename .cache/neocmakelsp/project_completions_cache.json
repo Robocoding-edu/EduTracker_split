@@ -1,0 +1,19 @@
+{
+  "date": "2026-07-31T16:45:59.467830+03:00",
+  "data": {
+    "C:\\Users\\strunder\\Desktop\\EduTracker\\EduTracker_split\\data\\src\\edutracker_description\\CMakeLists.txt": [
+      {
+        "label": "ament_cmake_LIBRARIES",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "package: ament_cmake"
+      },
+      {
+        "label": "ament_cmake_INCLUDE_DIRS",
+        "kind": 6,
+        "detail": "Variable",
+        "documentation": "package: ament_cmake"
+      }
+    ]
+  }
+}
