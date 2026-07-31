@@ -18,7 +18,8 @@ pull:
 	git pull
 
 start-server:
-	./server/start.sh
+	cd ./server
+	./start.sh
 
 start-rpi:
 	docker compose up -d
