@@ -24,8 +24,15 @@ class SerialBridgeNode(Node):
 
         # --- ФИЗИЧЕСКИЕ ПАРАМЕТРЫ РОБОТА ---
         self.wheel_diameter = 0.065  # 65 мм в метрах
-        self.wheel_separation = 0.193  # 195 мм в метрах
+        # Расстояние между ведущими колесами (колея), из URDF:
+        # left_wheel_joint y=+0.1155 и right_wheel_joint y=-0.1155 -> 0.231 м.
+        # Наличие/позиция пассивного 3-го колеса на эту формулу не влияет.
+        self.wheel_separation = 0.231
         self.ticks_per_rev = 77.0  # 77 тиков на оборот
+        # Знак энкодеров настраивается отдельно для каждого колеса:
+        # +1 оставить как есть, -1 инвертировать.
+        self.left_encoder_sign = -1
+        self.right_encoder_sign = -1
 
         self.last_cmd = None
         self.last_cmd_time = time.time()
@@ -133,11 +140,8 @@ class SerialBridgeNode(Node):
             if len(parts) < 5:
                 return
 
-            # ИСПРАВЛЕНО: Инвертируем знак (-), чтобы движение вперед давало ПЛЮС
-            enc_L = -int(parts[0])
-            enc_R = -int(
-                parts[1]
-            )  # Правое колесо проверь, если едет назад - тоже добавь минус
+            enc_L = self.left_encoder_sign * int(parts[0])
+            enc_R = self.right_encoder_sign * int(parts[1])
 
             dist_L = int(parts[2])
             dist_R = int(parts[3])
@@ -196,7 +200,9 @@ class SerialBridgeNode(Node):
 
         current_time = self.get_clock().now()
 
-        self._publish_odom_data(current_time, 0.0, 0.0)
+        # Republish the latest measured velocities instead of zeroing Twist,
+        # so Nav2 does not see false "robot stopped" states while moving.
+        self._publish_odom_data(current_time, self.last_vx, self.last_vth)
 
     def _publish_odom_data(self, current_time, v_x, v_th):
         # Переводим угол Эйлера (Theta) в кватернион вращения ROS
