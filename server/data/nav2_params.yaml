@@ -29,10 +29,10 @@ controller_server:
       min_lookahead_dist: 0.15
       max_lookahead_dist: 0.4
 
-      lookahead_time: 1.2
+      lookahead_time: 1.5
       transform_tolerance: 0.1
 
-      use_velocity_scaled_lookahead_dist: false
+      use_velocity_scaled_lookahead_dist: true
 
       min_approach_linear_velocity: 0.08
       approach_velocity_scaling_dist: 0.7
@@ -43,8 +43,8 @@ controller_server:
       use_regulated_linear_velocity_scaling: true
       use_cost_regulated_linear_velocity_scaling: false
 
-      regulated_linear_scaling_min_radius: 0.4
-      regulated_linear_scaling_min_speed: 0.08
+      regulated_linear_scaling_min_radius: 0.8
+      regulated_linear_scaling_min_speed: 0.25
 
       use_rotate_to_heading: false
 
