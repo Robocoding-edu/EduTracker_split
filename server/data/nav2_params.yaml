@@ -139,7 +139,7 @@ global_costmap:
     static_layer:
       plugin: "nav2_costmap_2d::StaticLayer"
 
-      enabled: false
+      enabled: true
 
       map_subscribe_transient_local: true
 
