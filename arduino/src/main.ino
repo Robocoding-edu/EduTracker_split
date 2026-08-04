@@ -29,7 +29,7 @@ const uint16_t STOP_DISTANCE_REAR = 200;
 unsigned long lastSensorUpdate = 0;
 const unsigned long sensorInterval = 80;
 
-constexpr int MIN_SPEED = 3;
+constexpr int MIN_SPEED = 30;
 
 float currentLinear = 0;
 float currentAngular = 0;
@@ -55,6 +55,14 @@ const int pinServoRight = 13; // Правая серва дифференциа�
 Servo servoL;
 Servo servoR;
 
+
+const float V_MIN = 0.035;     // м/с, минимальная реальная скорость
+const float V_MAX = 0.340;     // м/с, максимальная реальная скорость
+const float WHEEL_SEP = 0.231; // м, из serial_bridge.py
+const int PWM_MIN = 30;        // минимальный PWM, при котором моторы крутятся
+const int PWM_MAX = 255;
+const float MAX_OMEGA = 1.2;   // рад/с, безопасный максимум поворота
+
 // Текущие углы сервоприводов (изначально выставляем в центр — 90 градусов)
 int currentPitch = 90; // Наклон головы
 int currentYaw = 90;   // Поворот головы
@@ -75,6 +83,26 @@ int lastSentButton = -1;
 
 unsigned long lastCommandTime = 0;
 const unsigned long connectionTimeout = 1500;
+
+
+int velocityToPwm(float v) {
+  float av = fabs(v);
+
+  // Мертвая зона, чтобы около нуля моторы не дергались
+  if (av < 0.01) {
+    return 0;
+  }
+
+  if (av < V_MIN) av = V_MIN;
+  if (av > V_MAX) av = V_MAX;
+
+  float ratio = (av - V_MIN) / (V_MAX - V_MIN);
+  int pwm = PWM_MIN + (int)(ratio * (PWM_MAX - PWM_MIN));
+
+  if (v < 0) pwm = -pwm;
+
+  return pwm;
+}
 
 void initVL53L0X() {
   Wire.begin();
@@ -260,23 +288,37 @@ void parseCommand(String cmd) {
   else if (cmd.startsWith("#MOVE:")) {
     String valStr = cmd.substring(6);
     int commaIndex = valStr.indexOf(',');
+
     if (commaIndex != -1) {
       float linearX = valStr.substring(0, commaIndex).toFloat();
       float angularZ = valStr.substring(commaIndex + 1).toFloat();
+
+      // Ограничиваем команды
+      linearX = constrain(linearX, -V_MAX, V_MAX);
+      angularZ = constrain(angularZ, -MAX_OMEGA, MAX_OMEGA);
+
       currentLinear = linearX;
       currentAngular = angularZ;
-      int targetSpeed = (int)(linearX * 255.0);
-      int targetTurn = (int)(angularZ * 150.0);
-      int leftMotorSpeed = targetSpeed + targetTurn;
-      int rightMotorSpeed = targetSpeed - targetTurn;
 
-      // if (rightMotorSpeed != 0 && abs(rightMotorSpeed) < MIN_SPEED){
-      //     rightMotorSpeed += rightMotorSpeed < 0 ? -MIN_SPEED : MIN_SPEED ;
+      // Дифференциальный привод:
+      // positive angular.z в ROS = поворот влево
+      float leftVel  = linearX - angularZ * WHEEL_SEP / 2.0;
+      float rightVel = linearX + angularZ * WHEEL_SEP / 2.0;
 
-      // }
+      // Если одно колесо выходит за максимум, пропорционально режем обе скорости
+      float maxWheel = max(fabs(leftVel), fabs(rightVel));
+      if (maxWheel > V_MAX) {
+        float k = V_MAX / maxWheel;
+        leftVel *= k;
+        rightVel *= k;
+      }
+
+      int leftMotorSpeed = velocityToPwm(leftVel);
+      int rightMotorSpeed = velocityToPwm(rightVel);
 
       setMotor(1, leftMotorSpeed);
       setMotor(2, rightMotorSpeed);
+
       Serial.print("ACK:MOTORS_PWM:");
       Serial.print(leftMotorSpeed);
       Serial.print(",");

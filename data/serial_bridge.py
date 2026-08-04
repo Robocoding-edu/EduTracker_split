@@ -245,9 +245,14 @@ class SerialBridgeNode(Node):
             pass
 
     def cmd_vel_callback(self, msg):
+        linear_x = float(msg.linear.x)
+        angular_z = float(msg.angular.z)
 
-        linear_x = round(msg.linear.x, 2)
-        angular_z = round(msg.angular.z, 2)
+        linear_x = max(-0.34, min(0.34, linear_x))
+        angular_z = max(-1.2, min(1.2, angular_z))
+
+        linear_x = round(linear_x, 2)
+        angular_z = round(angular_z, 2)
 
         cmd = (linear_x, angular_z)
 
