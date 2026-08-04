@@ -29,7 +29,11 @@ const uint16_t STOP_DISTANCE_REAR = 200;
 unsigned long lastSensorUpdate = 0;
 const unsigned long sensorInterval = 80;
 
+<<<<<<< HEAD
 constexpr int MIN_SPEED = 30;
+=======
+constexpr int MIN_SPEED = 25;
+>>>>>>> 35a5aea38a00dc2c8ef96cb935ff97ed0d613e30
 
 float currentLinear = 0;
 float currentAngular = 0;
@@ -68,8 +72,8 @@ int currentPitch = 90; // Наклон головы
 int currentYaw = 90;   // Поворот головы
 
 // Настройки телеметрии (как было)
-long encoderLeft = 1000;
-long encoderRight = 1050;
+long encoderLeft = 0;
+long encoderRight = 0;
 int distanceLeft = 45;
 int distanceRight = 60;
 int buttonStatus = 0;
@@ -191,6 +195,8 @@ void setup() {
 }
 
 void loop() {
+
+
   unsigned long currentMillis = millis();
   if (currentMillis - lastSensorUpdate >= sensorInterval) {
     lastSensorUpdate = currentMillis;
@@ -236,7 +242,7 @@ void loop() {
     } else if (inChar != '\r') {
       inputBuffer += inChar;
     }
-  }
+    }
 }
 
 void parseCommand(String cmd) {
