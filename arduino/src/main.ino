@@ -164,10 +164,10 @@ void setup() {
 
 void loop() {
     if (Serial.available()) {
-        String s = Serial.parseInt();
+       int s = Serial.parseInt();
         Serial.println(s);
-        setMotor(1,s.toInt());
-        setMotor(2,s.toInt());
+        setMotor(1,s);
+        setMotor(2,s);
       }
     /*
   unsigned long currentMillis = millis();
