@@ -29,7 +29,7 @@ const uint16_t STOP_DISTANCE_REAR = 200;
 unsigned long lastSensorUpdate = 0;
 const unsigned long sensorInterval = 80;
 
-constexpr int MIN_SPEED = 3;
+constexpr int MIN_SPEED = 25;
 
 float currentLinear = 0;
 float currentAngular = 0;
@@ -161,22 +161,10 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(pinEncLeftA), isrLeft, RISING);
   attachInterrupt(digitalPinToInterrupt(pinEncRightA), isrRight, RISING);
 }
-long test_enc=0;
+
 void loop() {
-    if (Serial.available()) {
-       int s = Serial.parseInt();
 
-        setMotor(1,s);
-        setMotor(2,s);
-      }
-     unsigned long tmr_test = millis();
-    if(millis()-tmr_test>1000){
-        tmr_test=millis();
-        Serial.println((encoderLeft-test_enc)/77)*2*3.14*65;
-        test_enc=encoderLeft;
-    }
 
-    /*
   unsigned long currentMillis = millis();
   if (currentMillis - lastSensorUpdate >= sensorInterval) {
     lastSensorUpdate = currentMillis;
@@ -222,7 +210,7 @@ void loop() {
     } else if (inChar != '\r') {
       inputBuffer += inChar;
     }
-    }*/
+    }
 }
 
 void parseCommand(String cmd) {
