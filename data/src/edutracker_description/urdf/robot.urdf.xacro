@@ -25,11 +25,11 @@
   <link name="body_link">
       <visual>
         <geometry>
-          <!-- <cylinder radius="${body_radius}" length="${body_height}" /> -->
-          <mesh
+          <cylinder radius="${body_radius}" length="${body_height}" />
+          <!-- <mesh
                       filename="package://edutracker_description/meshes/base.stl"
                       scale="0.001 0.001 0.001"
-                  />
+                  /> -->
         </geometry>
 
         <origin xyz="-0.047 0 0.1225" />
@@ -52,11 +52,11 @@
 
     <visual>
       <geometry>
-        <!-- <cylinder radius="0.035" length="0.05" /> -->
-        <mesh
+        <cylinder radius="0.035" length="0.05" />
+        <!-- <mesh
                     filename="package://edutracker_description/meshes/lidar.stl"
                     scale="0.001 0.001 0.001"
-                />
+                /> -->
       </geometry>
 
       <origin xyz="0 0 0" />
@@ -109,11 +109,11 @@
 
     <visual>
       <geometry>
-        <!-- <cylinder radius="${wheel_radius}" length="${wheel_width}" /> -->
-        <mesh
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
+        <!-- <mesh
                     filename="package://edutracker_description/meshes/wheel.stl"
                     scale="0.001 0.001 0.001"
-                />
+                /> -->
       </geometry>
 
       <origin rpy="1.5708 0 0" />
@@ -140,11 +140,11 @@
 
     <visual>
       <geometry>
-        <!-- <cylinder radius="${wheel_radius}" length="${wheel_width}" /> -->
-        <mesh
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
+        <!-- <mesh
                     filename="package://edutracker_description/meshes/wheel.stl"
                     scale="0.001 0.001 0.001"
-                />
+                /> -->
       </geometry>
 
       <origin rpy="-1.5708 0 0" />
