@@ -60,8 +60,8 @@ int currentPitch = 90; // Наклон головы
 int currentYaw = 90;   // Поворот головы
 
 // Настройки телеметрии (как было)
-long encoderLeft = 1000;
-long encoderRight = 1050;
+long encoderLeft = 0;
+long encoderRight = 0;
 int distanceLeft = 45;
 int distanceRight = 60;
 int buttonStatus = 0;
@@ -161,14 +161,21 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(pinEncLeftA), isrLeft, RISING);
   attachInterrupt(digitalPinToInterrupt(pinEncRightA), isrRight, RISING);
 }
-
+long test_enc=0;
 void loop() {
     if (Serial.available()) {
        int s = Serial.parseInt();
-        Serial.println(s);
+
         setMotor(1,s);
         setMotor(2,s);
       }
+     unsigned long tmr_test = millis();
+    if(millis()-tmr_test>1000){
+        tmr_test=millis();
+        Serial.println((encoderLeft-test_enc)/77)*2*3.14*65;
+        test_enc=encoderLeft;
+    }
+
     /*
   unsigned long currentMillis = millis();
   if (currentMillis - lastSensorUpdate >= sensorInterval) {
