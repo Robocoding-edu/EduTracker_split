@@ -210,24 +210,20 @@ void loop() {
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
 
-    if (encoderLeft != lastSentLeft || encoderRight != lastSentRight ||
-        buttonStatus != lastSentButton) {
+    lastSentLeft = encoderLeft;
+    lastSentRight = encoderRight;
+    lastSentButton = buttonStatus;
 
-      lastSentLeft = encoderLeft;
-      lastSentRight = encoderRight;
-      lastSentButton = buttonStatus;
-
-      Serial.print("DAT:");
-      Serial.print(encoderLeft);
-      Serial.print(",");
-      Serial.print(encoderRight);
-      Serial.print(",");
-      Serial.print(distanceLeft);
-      Serial.print(",");
-      Serial.print(distanceRight);
-      Serial.print(",");
-      Serial.println(buttonStatus);
-    }
+    Serial.print("DAT:");
+    Serial.print(encoderLeft);
+    Serial.print(",");
+    Serial.print(encoderRight);
+    Serial.print(",");
+    Serial.print(distanceLeft);
+    Serial.print(",");
+    Serial.print(distanceRight);
+    Serial.print(",");
+    Serial.println(buttonStatus);
   }
 
   // Прием команд от Малинки

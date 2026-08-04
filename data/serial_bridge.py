@@ -197,12 +197,32 @@ class SerialBridgeNode(Node):
             pass
 
     def publish_odom_timer(self):
-
         current_time = self.get_clock().now()
 
-        # Republish the latest measured velocities instead of zeroing Twist,
-        # so Nav2 does not see false "robot stopped" states while moving.
-        self._publish_odom_data(current_time, self.last_vx, self.last_vth)
+        # Проверяем, не устарели ли данные
+        dt = (current_time - self.last_time).nanoseconds / 1e9
+
+        if dt > 0.5:  # Если данные старше 500 мс, не публикуем TF
+            # Публикуем только одометрию, но не TF
+            odom = Odometry()
+            odom.header.stamp = current_time.to_msg()
+            odom.header.frame_id = "odom"
+            odom.child_frame_id = "base_link"
+            odom.pose.pose.position.x = self.x
+            odom.pose.pose.position.y = self.y
+            odom.pose.pose.position.z = 0.0
+
+            q = Quaternion()
+            q.z = math.sin(self.th / 2.0)
+            q.w = math.cos(self.th / 2.0)
+            odom.pose.pose.orientation = q
+
+            odom.twist.twist.linear.x = 0.0
+            odom.twist.twist.angular.z = 0.0
+            self.odom_pub.publish(odom)
+        else:
+            # Данные свежие, публикуем всё
+            self._publish_odom_data(current_time, self.last_vx, self.last_vth)
 
     def _publish_odom_data(self, current_time, v_x, v_th):
         # Переводим угол Эйлера (Theta) в кватернион вращения ROS
