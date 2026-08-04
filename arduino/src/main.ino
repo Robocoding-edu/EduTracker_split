@@ -163,6 +163,13 @@ void setup() {
 }
 
 void loop() {
+    if (Serial.available()) {
+        String s = Serial.parseInt();
+        Serial.println(s);
+        setMotor(1,s.toInt());
+        setMotor(2,s.toInt());
+      }
+    /*
   unsigned long currentMillis = millis();
   if (currentMillis - lastSensorUpdate >= sensorInterval) {
     lastSensorUpdate = currentMillis;
@@ -208,7 +215,7 @@ void loop() {
     } else if (inChar != '\r') {
       inputBuffer += inChar;
     }
-  }
+    }*/
 }
 
 void parseCommand(String cmd) {
