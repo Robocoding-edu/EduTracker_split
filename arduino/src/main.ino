@@ -29,11 +29,8 @@ const uint16_t STOP_DISTANCE_REAR = 200;
 unsigned long lastSensorUpdate = 0;
 const unsigned long sensorInterval = 80;
 
-<<<<<<< HEAD
+
 constexpr int MIN_SPEED = 30;
-=======
-constexpr int MIN_SPEED = 25;
->>>>>>> 35a5aea38a00dc2c8ef96cb935ff97ed0d613e30
 
 float currentLinear = 0;
 float currentAngular = 0;
