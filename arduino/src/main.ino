@@ -29,7 +29,7 @@ const uint16_t STOP_DISTANCE_REAR = 200;
 unsigned long lastSensorUpdate = 0;
 const unsigned long sensorInterval = 80;
 
-constexpr uint16_t MIN_SPEED = 10;
+constexpr int MIN_SPEED = 10;
 
 float currentLinear = 0;
 float currentAngular = 0;
@@ -329,7 +329,7 @@ void updateVL53() {
 }
 
 bool obstacleDetected() {
-  bool movingForward = false;
+  // bool movingForward = false;
 
   // если есть команда движения вперёд
   // можно сделать через переменную
