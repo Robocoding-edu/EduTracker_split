@@ -157,6 +157,9 @@ void isrRight() {
   }
 }
 
+int leftMotorSpeedT = 0;
+int rightMotorSpeedT = 0;
+
 void setMotor(int motorNum, int speed);
 void stopMotors();
 void parseCommand(String cmd);
@@ -194,11 +197,9 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(pinEncRightA), isrRight, RISING);
 }
 
-int leftMotorSpeedT = 0;
-int rightMotorSpeedT = 0;
 void loop() {
   static unsigned long tmr_m = 0;
-  if (millis() - tmr_m > 25) {
+  if (millis() - tmr_m > 3) {
     tmr_m = millis();
     if (leftMotorSpeedT > leftMotorSpeed)leftMotorSpeedT--;
     if (leftMotorSpeedT < leftMotorSpeed)leftMotorSpeedT++;

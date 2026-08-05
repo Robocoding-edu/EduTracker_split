@@ -24,5 +24,5 @@ start-rpi:
 	docker compose up -d
 
 
-arduino:
+arduino-build:
 	cd ./arduino && pio run --target upload --upload-port /dev/sensors/arduino
