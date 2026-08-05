@@ -246,7 +246,7 @@ int smoothStep(int current, int target)
   if (abs(diff) <= 1)
     return target;
 
-  int step = diff / 4;
+  int step = diff / 2;
 
   if (step == 0)
     step = diff > 0 ? 1 : -1;
