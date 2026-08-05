@@ -64,6 +64,9 @@ const int PWM_MIN = 30;        // минимальный PWM, при котор�
 const int PWM_MAX = 255;
 const float MAX_OMEGA = 1.2;   // рад/с, безопасный максимум поворота
 
+int leftMotorSpeed=0;
+int rightMotorSpeed=0;
+
 // Текущие углы сервоприводов (изначально выставляем в центр — 90 градусов)
 int currentPitch = 90; // Наклон головы
 int currentYaw = 90;   // Поворот головы
@@ -101,7 +104,7 @@ int velocityToPwm(float v) {
   int pwm = PWM_MIN + (int)(ratio * (PWM_MAX - PWM_MIN));
 
   if (v < 0) pwm = -pwm;
-
+  pwm=constrain(pwm, MIN_SPEED, 255);
   return pwm;
 }
 
@@ -191,7 +194,19 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(pinEncRightA), isrRight, RISING);
 }
 
+int leftMotorSpeedT = 0;
+int rightMotorSpeedT = 0;
 void loop() {
+    static unsigned long tmr_m = 0;
+    if(millis()-tmr>25){
+        if(leftMotorSpeedT > leftMotorSpeed)leftMotorSpeed--;
+        if(leftMotorSpeedT < leftMotorSpeed)leftMotorSpeed++;
+        if(rightMotorSpeedT > rightMotorSpeed)rightMotorSpeed--;
+        if(rightMotorSpeedT < rightMotorSpeed)rightMotorSpeed++;
+        setMotor(1, leftMotorSpeedT);
+        setMotor(2, rightMotorSpeedT);
+    }
+
 
 
   unsigned long currentMillis = millis();
@@ -312,11 +327,8 @@ void parseCommand(String cmd) {
         rightVel *= k;
       }
 
-      int leftMotorSpeed = velocityToPwm(leftVel);
-      int rightMotorSpeed = velocityToPwm(rightVel);
-
-      setMotor(1, leftMotorSpeed);
-      setMotor(2, rightMotorSpeed);
+      leftMotorSpeed = velocityToPwm(leftVel);
+      rightMotorSpeed = velocityToPwm(rightVel);
 
       Serial.print("ACK:MOTORS_PWM:");
       Serial.print(leftMotorSpeed);
@@ -339,10 +351,6 @@ void setMotor(int motorNum, int speed) {
     in2State = HIGH;
     speed = -speed;
   }
-  if (speed > 255)
-    speed = 255;
-  if (speed > 0 && speed < MIN_SPEED )
-      speed = MIN_SPEED;
   if (motorNum == 1) {
     digitalWrite(pinAIN1, in1State);
     digitalWrite(pinAIN2, in2State);
