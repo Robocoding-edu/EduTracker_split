@@ -199,8 +199,9 @@ void setup() {
 
 void loop() {
   static unsigned long tmr_m = 0;
-  if (millis() - tmr_m > 3) {
-    tmr_m = millis();
+  unsigned long currentMillis = millis();
+  if (currentMillis - tmr_m > 1) {
+    tmr_m = currentMillis;
     if (leftMotorSpeedT > leftMotorSpeed)leftMotorSpeedT--;
     if (leftMotorSpeedT < leftMotorSpeed)leftMotorSpeedT++;
     if (rightMotorSpeedT > rightMotorSpeed)rightMotorSpeedT--;
@@ -211,7 +212,6 @@ void loop() {
 
 
 
-  unsigned long currentMillis = millis();
   if (currentMillis - lastSensorUpdate >= sensorInterval) {
     lastSensorUpdate = currentMillis;
     updateVL53();
