@@ -198,14 +198,48 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(pinEncRightA), isrRight, RISING);
 }
 
+int updateSpeed(int current, int target)
+{
+  // остановка
+  if (target == 0) {
+    if (current > MIN_SPEED)
+      return smoothStep(current, MIN_SPEED);
+    else
+      return 0;
+  }
+
+  // старт
+  if (current == 0)
+    return MIN_SPEED;
+
+  // обычное изменение скорости
+  return smoothStep(current, target);
+}
+
+
+int smoothStep(int current, int target)
+{
+  int diff = target - current;
+
+  if (abs(diff) <= 1)
+    return target;
+
+  int step = diff / 4;
+
+  if (step == 0)
+    step = diff > 0 ? 1 : -1;
+
+  return current + step;
+}
+
 void loop() {
   unsigned long currentMillis = millis();
   if (currentMillis - tmr_m > 1) {
     tmr_m = currentMillis;
-    if (leftMotorSpeedT > leftMotorSpeed) leftMotorSpeedT -= (leftMotorSpeedT - leftMotorSpeed)/4;
-    if (leftMotorSpeedT < leftMotorSpeed) leftMotorSpeedT += (leftMotorSpeed - leftMotorSpeedT)/4;
-    if (rightMotorSpeedT > rightMotorSpeed) rightMotorSpeedT -= (rightMotorSpeedT - rightMotorSpeed)/4;
-    if (rightMotorSpeedT < rightMotorSpeed) rightMotorSpeedT += (rightMotorSpeed - rightMotorSpeedT)/4;
+
+    leftMotorSpeedT = updateSpeed(leftMotorSpeedT, leftMotorSpeed);
+    rightMotorSpeedT = updateSpeed(rightMotorSpeedT, rightMotorSpeed);
+
     setMotor(1, leftMotorSpeedT);
     setMotor(2, rightMotorSpeedT);
   }
