@@ -108,7 +108,8 @@ class SerialBridgeNode(Node):
         try:
             linear_x, angular_z = self.last_cmd
 
-            self.ser.write(f"#MOVE:{linear_x},{angular_z}\n".encode())
+            # Инвертируем линейную скорость, так как робот едет в обратную сторону
+            self.ser.write(f"#MOVE:{-linear_x},{angular_z}\n".encode())
 
         except Exception:
             pass
@@ -282,7 +283,8 @@ class SerialBridgeNode(Node):
         self.last_cmd = cmd
 
         try:
-            self.ser.write(f"#MOVE:{linear_x},{angular_z}\n".encode())
+            # Инвертируем линейную скорость, так как робот едет в обратную сторону
+            self.ser.write(f"#MOVE:{-linear_x},{angular_z}\n".encode())
 
         except Exception:
             pass
