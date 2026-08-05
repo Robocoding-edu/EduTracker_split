@@ -10,10 +10,10 @@
 #define SENSOR_COUNT 4
 
 const uint8_t XSHUT_PINS[SENSOR_COUNT] = {
-    23, // RIGHT
-    25, // FRONT
-    24, // LEFT
-    22  // REAR
+  23, // RIGHT
+  25, // FRONT
+  24, // LEFT
+  22  // REAR
 };
 
 const uint8_t SENSOR_ADDR[SENSOR_COUNT] = {0x30, 0x31, 0x32, 0x33};
@@ -64,8 +64,8 @@ const int PWM_MIN = 30;        // минимальный PWM, при котор�
 const int PWM_MAX = 255;
 const float MAX_OMEGA = 1.2;   // рад/с, безопасный максимум поворота
 
-int leftMotorSpeed=0;
-int rightMotorSpeed=0;
+int leftMotorSpeed = 0;
+int rightMotorSpeed = 0;
 
 // Текущие углы сервоприводов (изначально выставляем в центр — 90 градусов)
 int currentPitch = 90; // Наклон головы
@@ -104,7 +104,7 @@ int velocityToPwm(float v) {
   int pwm = PWM_MIN + (int)(ratio * (PWM_MAX - PWM_MIN));
 
   if (v < 0) pwm = -pwm;
-  pwm=constrain(pwm, MIN_SPEED, 255);
+  pwm = constrain(pwm, MIN_SPEED, 255);
   return pwm;
 }
 
@@ -197,15 +197,16 @@ void setup() {
 int leftMotorSpeedT = 0;
 int rightMotorSpeedT = 0;
 void loop() {
-    static unsigned long tmr_m = 0;
-    if(millis()-tmr>25){
-        if(leftMotorSpeedT > leftMotorSpeed)leftMotorSpeed--;
-        if(leftMotorSpeedT < leftMotorSpeed)leftMotorSpeed++;
-        if(rightMotorSpeedT > rightMotorSpeed)rightMotorSpeed--;
-        if(rightMotorSpeedT < rightMotorSpeed)rightMotorSpeed++;
-        setMotor(1, leftMotorSpeedT);
-        setMotor(2, rightMotorSpeedT);
-    }
+  static unsigned long tmr_m = 0;
+  if (millis() - tmr_m > 25) {
+    tmr_m = millis();
+    if (leftMotorSpeedT > leftMotorSpeed)leftMotorSpeed--;
+    if (leftMotorSpeedT < leftMotorSpeed)leftMotorSpeed++;
+    if (rightMotorSpeedT > rightMotorSpeed)rightMotorSpeed--;
+    if (rightMotorSpeedT < rightMotorSpeed)rightMotorSpeed++;
+    setMotor(1, leftMotorSpeedT);
+    setMotor(2, rightMotorSpeedT);
+  }
 
 
 
@@ -250,7 +251,7 @@ void loop() {
     } else if (inChar != '\r') {
       inputBuffer += inChar;
     }
-    }
+  }
 }
 
 void parseCommand(String cmd) {
@@ -269,7 +270,7 @@ void parseCommand(String cmd) {
       // Изменяем текущую виртуальную позицию головы робота
       // (добавляем смещение, чтобы камера двигалась плавно, пока зажата кнопка)
       currentPitch +=
-          deltaPitch / 5; // Деление на 5 уменьшает резкость движения
+        deltaPitch / 5; // Деление на 5 уменьшает резкость движения
       currentYaw += deltaYaw / 5;
 
       // Ограничиваем виртуальные углы в безопасные физические лимиты (от 20 до
@@ -386,7 +387,7 @@ bool obstacleDetected() {
 }
 
 bool emergencyStop() {
-    // вперёд
+  // вперёд
   if (currentLinear > 0.05) {
     if (distances[1] < STOP_DISTANCE_FRONT)
       return true;
