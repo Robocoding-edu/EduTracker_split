@@ -256,6 +256,9 @@ void loop() {
 
     leftMotorSpeedT = updateSpeed(leftMotorSpeedT, leftMotorSpeed);
     rightMotorSpeedT = updateSpeed(rightMotorSpeedT, rightMotorSpeed);
+    Serial.println("NEEDED_MOTOR_SPEED: L" + leftMotorSpeed + " R" + rightMotorSpeed);
+    Serial.println("CURUNT_MOTOR_SPEED: L" + leftMotorSpeedT + " R" + rightMotorSpeedT);
+
 
     setMotor(1, leftMotorSpeedT);
     setMotor(2, rightMotorSpeedT);
