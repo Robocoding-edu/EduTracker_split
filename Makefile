@@ -18,11 +18,11 @@ pull:
 	git pull
 
 start-server:
-	cd ./server | ./start.sh
+	cd ./server && ./start.sh
 
 start-rpi:
 	docker compose up -d
 
 
 arduino:
-	cd ./arduino | pio run --target upload --upload-port /dev/sensors/arduino
+	cd ./arduino && pio run --target upload --upload-port /dev/sensors/arduino
