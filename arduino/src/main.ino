@@ -104,8 +104,13 @@ int velocityToPwm(float v) {
   float ratio = (av - V_MIN) / (V_MAX - V_MIN);
   int pwm = PWM_MIN + (int)(ratio * (PWM_MAX - PWM_MIN));
 
-  if (v < 0) pwm = -pwm;
-  pwm = constrain(pwm, MIN_SPEED, 255);
+  if (v < 0){
+      pwm = -constrain(pwm, MIN_SPEED, 255;
+  }else{
+      pwm = constrain(pwm, MIN_SPEED, 255);
+
+  }
+
   return pwm;
 }
 
