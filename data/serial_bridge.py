@@ -31,8 +31,9 @@ class SerialBridgeNode(Node):
         self.ticks_per_rev = 77.0  # 77 тиков на оборот
         # Знак энкодеров настраивается отдельно для каждого колеса:
         # +1 оставить как есть, -1 инвертировать.
-        self.left_encoder_sign = -1
-        self.right_encoder_sign = -1
+        # Если робот едет к цели задом - поменять оба знака на противоположные!
+        self.left_encoder_sign = 1
+        self.right_encoder_sign = 1
 
         self.last_cmd = None
         self.last_cmd_time = time.time()
@@ -108,8 +109,8 @@ class SerialBridgeNode(Node):
         try:
             linear_x, angular_z = self.last_cmd
 
-            # Инвертируем линейную скорость, так как робот едет в обратную сторону
-            self.ser.write(f"#MOVE:{-linear_x},{angular_z}\n".encode())
+            # Отправляем команду напрямую без инверсии
+            self.ser.write(f"#MOVE:{linear_x},{angular_z}\n".encode())
 
         except Exception:
             pass
@@ -283,8 +284,8 @@ class SerialBridgeNode(Node):
         self.last_cmd = cmd
 
         try:
-            # Инвертируем линейную скорость, так как робот едет в обратную сторону
-            self.ser.write(f"#MOVE:{-linear_x},{angular_z}\n".encode())
+            # Отправляем команду напрямую без инверсии
+            self.ser.write(f"#MOVE:{linear_x},{angular_z}\n".encode())
 
         except Exception:
             pass
