@@ -6,7 +6,7 @@ controller_server:
     cmd_vel_topic: /cmd_vel
 
     controller_plugins: ["FollowPath"]
-    progress_checker_plugins: []
+    progress_checker_plugins: ["progress_checker"]
     goal_checker_plugins: ["goal_checker"]
 
     progress_checker:
