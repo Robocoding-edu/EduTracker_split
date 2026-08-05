@@ -106,7 +106,7 @@ class SerialBridgeNode(Node):
             linear_x, angular_z = self.last_cmd
 
             # Отправляем команду напрямую без инверсии
-            self.ser.write(f"#MOVE:{linear_x},{angular_z}\n".encode())
+            self.ser.write(f"#MOVE:{-linear_x},{angular_z}\n".encode())
 
         except Exception:
             pass
@@ -281,7 +281,7 @@ class SerialBridgeNode(Node):
 
         try:
             # Отправляем команду напрямую без инверсии
-            self.ser.write(f"#MOVE:{linear_x},{angular_z}\n".encode())
+            self.ser.write(f"#MOVE:{-linear_x},{angular_z}\n".encode())
 
         except Exception:
             pass
