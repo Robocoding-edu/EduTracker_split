@@ -260,8 +260,8 @@ void loop() {
   if (currentMillis - tmr_m > 1) {
     tmr_m = currentMillis;
 
-    leftMotorSpeedT = updateSpeed(leftMotorSpeedT, leftMotorSpeed);
-    rightMotorSpeedT = updateSpeed(rightMotorSpeedT, rightMotorSpeed);
+    // leftMotorSpeedT = updateSpeed(leftMotorSpeedT, leftMotorSpeed);
+    // rightMotorSpeedT = updateSpeed(rightMotorSpeedT, rightMotorSpeed);
 
     Serial.print("NEEDED_MOTOR_SPEED: L");
     Serial.print(leftMotorSpeed);
@@ -274,8 +274,8 @@ void loop() {
     Serial.println(rightMotorSpeedT);
 
 
-    setMotor(1, leftMotorSpeedT);
-    setMotor(2, rightMotorSpeedT);
+    setMotor(1, leftMotorSpeed);
+    setMotor(2, rightMotorSpeed);
   }
 
 
