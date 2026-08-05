@@ -202,10 +202,10 @@ void loop() {
   unsigned long currentMillis = millis();
   if (currentMillis - tmr_m > 1) {
     tmr_m = currentMillis;
-    if (leftMotorSpeedT > leftMotorSpeed)leftMotorSpeedT--;
-    if (leftMotorSpeedT < leftMotorSpeed)leftMotorSpeedT++;
-    if (rightMotorSpeedT > rightMotorSpeed)rightMotorSpeedT--;
-    if (rightMotorSpeedT < rightMotorSpeed)rightMotorSpeedT++;
+    if (leftMotorSpeedT > leftMotorSpeed) leftMotorSpeedT -= (leftMotorSpeed-leftMotorSpeedT)/4;
+    if (leftMotorSpeedT < leftMotorSpeed) leftMotorSpeedT += (leftMotorSpeed-leftMotorSpeedT)/4;
+    if (rightMotorSpeedT > rightMotorSpeed) rightMotorSpeedT -= (rightMotorSpeed-rightMotorSpeedT)/4;
+    if (rightMotorSpeedT < rightMotorSpeed) rightMotorSpeedT += (rightMotorSpeed-rightMotorSpeedT)/4;
     setMotor(1, leftMotorSpeedT);
     setMotor(2, rightMotorSpeedT);
   }
