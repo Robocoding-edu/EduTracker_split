@@ -78,6 +78,7 @@ int distanceLeft = 45;
 int distanceRight = 60;
 int buttonStatus = 0;
 unsigned long previousMillis = 0;
+unsigned long tmr_m = 0;
 const long interval = 100;
 String inputBuffer = "";
 
@@ -198,7 +199,6 @@ void setup() {
 }
 
 void loop() {
-  static unsigned long tmr_m = 0;
   unsigned long currentMillis = millis();
   if (currentMillis - tmr_m > 1) {
     tmr_m = currentMillis;
