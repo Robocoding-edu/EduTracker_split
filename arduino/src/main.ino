@@ -198,21 +198,37 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(pinEncRightA), isrRight, RISING);
 }
 
+int sign(int x)
+{
+  if (x > 0) return 1;
+  if (x < 0) return -1;
+  return 0;
+}
+
+
 int updateSpeed(int current, int target)
 {
-  // остановка
+  int direction = sign(target);
+
+  // Остановка
   if (target == 0) {
-    if (current > MIN_SPEED)
-      return smoothStep(current, MIN_SPEED);
-    else
-      return 0;
+    if (abs(current) > MIN_SPEED)
+      return smoothStep(current, direction * MIN_SPEED);
+
+    return 0;
   }
 
-  // старт
+  // Старт из остановки
   if (current == 0)
-    return MIN_SPEED;
+    return direction * MIN_SPEED;
 
-  // обычное изменение скорости
+  // Если надо поменять направление
+  // сначала останавливаемся
+  if (sign(current) != direction) {
+    return smoothStep(current, 0);
+  }
+
+  // Обычное изменение скорости
   return smoothStep(current, target);
 }
 
@@ -231,6 +247,7 @@ int smoothStep(int current, int target)
 
   return current + step;
 }
+
 
 void loop() {
   unsigned long currentMillis = millis();
