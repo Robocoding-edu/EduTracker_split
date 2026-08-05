@@ -106,7 +106,7 @@ int velocityToPwm(float v) {
 
   if (v < 0){
       pwm = constrain(pwm, MIN_SPEED, 255);
-      pwm = -pwm
+      pwm = -pwm;
   }else{
       pwm = constrain(pwm, MIN_SPEED, 255);
 
