@@ -28,8 +28,8 @@ class SerialBridgeNode(Node):
         self.wheel_separation = 0.231
         self.ticks_per_rev = 77.0  # 77 тиков на оборот
 
-        self.left_encoder_sign = -1
-        self.right_encoder_sign = -1
+        self.left_encoder_sign = 1
+        self.right_encoder_sign = 1
 
         self.last_cmd = None
         self.last_cmd_time = time.time()
