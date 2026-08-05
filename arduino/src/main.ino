@@ -5,44 +5,6 @@
 
 #define SERIAL_BAUD 115200
 
-// ================= VL53L0X =================
-
-#define SENSOR_COUNT 4
-
-const uint8_t XSHUT_PINS[SENSOR_COUNT] = {
-    23, // RIGHT
-    25, // FRONT
-    24, // LEFT
-    22  // REAR
-};
-
-const uint8_t SENSOR_ADDR[SENSOR_COUNT] = {0x30, 0x31, 0x32, 0x33};
-
-VL53L0X sensors[SENSOR_COUNT];
-
-uint16_t distances[SENSOR_COUNT];
-
-const uint16_t STOP_DISTANCE_FRONT = 250; // мм
-const uint16_t STOP_DISTANCE_SIDE = 150;
-const uint16_t STOP_DISTANCE_REAR = 200;
-
-unsigned long lastSensorUpdate = 0;
-const unsigned long sensorInterval = 80;
-
-
-constexpr int MIN_SPEED = 30;
-
-float currentLinear = 0;
-float currentAngular = 0;
-
-// --- КОНФИГУРАЦИЯ ПИНОВ МОТОРОВ КОЛЕС (Уже настроено) ---
-const int pinPWMA = 8;
-const int pinAIN2 = 7;
-const int pinAIN1 = 6;
-const int pinBIN1 = 9;
-const int pinBIN2 = 10;
-const int pinPWMB = 11;
-
 // --- КОНФИГУРАЦИЯ ПИНОВ ЭНКОДЕРОВ (ПО СХЕМЕ) ---
 const int pinEncLeftA = 3;   // J8 пин 3
 const int pinEncLeftB = 15;  // J8 пин 4
@@ -53,9 +15,27 @@ const int pinEncRightB = 14; // J1 пин 4
 const int pinServoLeft = 5;   // Левая серва дифференциала
 const int pinServoRight = 13; // Правая серва дифференциала
 
+// ================= VL53L0X =================
+#define SENSOR_COUNT 4
+const uint8_t XSHUT_PINS[SENSOR_COUNT] = {
+    23, // RIGHT
+    25, // FRONT
+    24, // LEFT
+    22  // REAR
+};
+const uint8_t SENSOR_ADDR[SENSOR_COUNT] = {0x30, 0x31, 0x32, 0x33};
+VL53L0X sensors[SENSOR_COUNT];
+uint16_t distances[SENSOR_COUNT];
+
+const uint16_t STOP_DISTANCE_FRONT = 250; // мм
+const uint16_t STOP_DISTANCE_SIDE = 150;
+const uint16_t STOP_DISTANCE_REAR = 200;
+
+float currentLinear = 0;
+float currentAngular = 0;
+
 Servo servoL;
 Servo servoR;
-
 
 const float V_MIN = 0.035;     // м/с, минимальная реальная скорость
 const float V_MAX = 0.340;     // м/с, максимальная реальная скорость
@@ -154,8 +134,7 @@ void isrRight() {
   }
 }
 
-void setMotor(int motorNum, int speed);
-void stopMotors();
+
 void parseCommand(String cmd);
 
 void setup() {
@@ -193,9 +172,9 @@ void setup() {
 
 void loop() {
 
-
+  static unsigned long lastSensorUpdate = 0;
   unsigned long currentMillis = millis();
-  if (currentMillis - lastSensorUpdate >= sensorInterval) {
+  if (currentMillis - lastSensorUpdate >= 80) {
     lastSensorUpdate = currentMillis;
     updateVL53();
 
@@ -327,7 +306,7 @@ void parseCommand(String cmd) {
 }
 
 
-// Функции моторов (как были)
+constexpr int MIN_SPEED = 30;
 void setMotor(int motorNum, int speed) {
   boolean in1State = LOW;
   boolean in2State = LOW;
@@ -353,6 +332,7 @@ void setMotor(int motorNum, int speed) {
     analogWrite(pinPWMB, speed);
   }
 }
+
 void stopMotors() {
   setMotor(1, 0);
   setMotor(2, 0);
