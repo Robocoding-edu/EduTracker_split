@@ -24,8 +24,16 @@ controller_server:
     FollowPath:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
 
-      desired_linear_vel: 0.30
+      # Линейные скорости (м/с)
+      desired_linear_vel: 0.35          # Максимальная скорость: 350 мм/с
+      min_approach_linear_velocity: 0.035  # Минимальная скорость приближения: 35 мм/с
+      regulated_linear_scaling_min_speed: 0.035  # Минимальная регулируемая скорость: 35 мм/с
 
+      # Лимиты ускорения (м/с²) - критично для синхронизации с SLAM
+      max_linear_accel: 0.5             # Максимальное линейное ускорение
+      min_linear_accel: -0.5            # Минимальное линейное ускорение (торможение)
+
+      # Параметры lookahead
       lookahead_dist: 0.35
       min_lookahead_dist: 0.25
       max_lookahead_dist: 0.50
@@ -35,7 +43,6 @@ controller_server:
 
       use_velocity_scaled_lookahead_dist: true
 
-      min_approach_linear_velocity: 0.05
       approach_velocity_scaling_dist: 0.45
 
       use_collision_detection: true
@@ -45,7 +52,6 @@ controller_server:
       use_cost_regulated_linear_velocity_scaling: false
 
       regulated_linear_scaling_min_radius: 0.35
-      regulated_linear_scaling_min_speed: 0.05
 
       use_rotate_to_heading: true
 

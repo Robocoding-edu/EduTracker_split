@@ -268,9 +268,12 @@ class SerialBridgeNode(Node):
         linear_x = float(msg.linear.x)
         angular_z = float(msg.angular.z)
 
-        linear_x = max(-0.34, min(0.34, linear_x))
+        # Лимиты скоростей согласно Agents.md (V_MIN=0.035 м/с, V_MAX=0.340 м/с)
+        # Оставляем небольшой запас сверху для корректной работы регуляторов nav2
+        linear_x = max(-0.35, min(0.35, linear_x))
         angular_z = max(-1.2, min(1.2, angular_z))
 
+        # Округление для стабильности передачи
         linear_x = round(linear_x, 2)
         angular_z = round(angular_z, 2)
 
