@@ -12,4 +12,4 @@ sudo chmod 666 /dev/sensors/arduino
 cp "$1" ~/atmega_project/src/main.ino
 
 # Шьем строго в порт /dev/ttyUSB1
-pio run --target upload --upload-port /dev/ttyUSB1
+pio run --target upload --upload-port /dev/sensors/arduino

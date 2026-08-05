@@ -24,16 +24,12 @@ class SerialBridgeNode(Node):
 
         # --- ФИЗИЧЕСКИЕ ПАРАМЕТРЫ РОБОТА ---
         self.wheel_diameter = 0.065  # 65 мм в метрах
-        # Расстояние между ведущими колесами (колея), из URDF:
-        # left_wheel_joint y=+0.1155 и right_wheel_joint y=-0.1155 -> 0.231 м.
-        # Наличие/позиция пассивного 3-го колеса на эту формулу не влияет.
+
         self.wheel_separation = 0.231
         self.ticks_per_rev = 77.0  # 77 тиков на оборот
-        # Знак энкодеров настраивается отдельно для каждого колеса:
-        # +1 оставить как есть, -1 инвертировать.
-        # Если робот едет к цели задом - поменять оба знака на противоположные!
-        self.left_encoder_sign = 1
-        self.right_encoder_sign = 1
+
+        self.left_encoder_sign = -1
+        self.right_encoder_sign = -1
 
         self.last_cmd = None
         self.last_cmd_time = time.time()
