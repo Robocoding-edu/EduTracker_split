@@ -272,8 +272,8 @@ class SerialBridgeNode(Node):
         angular_z = max(-1.2, min(1.2, angular_z))
 
         # Округление для стабильности передачи
-        linear_x = round(linear_x, 2)
-        angular_z = round(angular_z, 2)
+        linear_x = round(linear_x, 3)
+        angular_z = round(angular_z, 3)
 
         cmd = (linear_x, angular_z)
 

@@ -30,13 +30,13 @@ controller_server:
       regulated_linear_scaling_min_speed: 0.035  # Минимальная регулируемая скорость: 35 мм/с
 
       # Лимиты ускорения (м/с²) - плавные для синхронизации с SLAM
-      max_linear_accel: 0.15             # Максимальное линейное ускорение (снижено для плавности)
-      min_linear_accel: -0.15            # Минимальное линейное ускорение (торможение)
+      max_linear_accel: 0.5             # Максимальное линейное ускорение (снижено для плавности)
+      min_linear_accel: -0.5            # Минимальное линейное ускорение (торможение)
 
       # Параметры lookahead
-      lookahead_dist: 0.50
-      min_lookahead_dist: 0.35
-      max_lookahead_dist: 0.70
+      lookahead_dist: 0.30
+      min_lookahead_dist: 0.25
+      max_lookahead_dist: 0.45
 
       lookahead_time: 1.5
       transform_tolerance: 0.8
@@ -45,7 +45,7 @@ controller_server:
 
       approach_velocity_scaling_dist: 0.50
 
-      use_collision_detection: false
+      use_collision_detection: true
       max_allowed_time_to_collision_up_to_carrot: 2.0
 
       use_regulated_linear_velocity_scaling: false
