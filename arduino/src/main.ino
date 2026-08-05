@@ -200,10 +200,10 @@ void loop() {
   static unsigned long tmr_m = 0;
   if (millis() - tmr_m > 25) {
     tmr_m = millis();
-    if (leftMotorSpeedT > leftMotorSpeed)leftMotorSpeed--;
-    if (leftMotorSpeedT < leftMotorSpeed)leftMotorSpeed++;
-    if (rightMotorSpeedT > rightMotorSpeed)rightMotorSpeed--;
-    if (rightMotorSpeedT < rightMotorSpeed)rightMotorSpeed++;
+    if (leftMotorSpeedT > leftMotorSpeed)leftMotorSpeedT--;
+    if (leftMotorSpeedT < leftMotorSpeed)leftMotorSpeedT++;
+    if (rightMotorSpeedT > rightMotorSpeed)rightMotorSpeedT--;
+    if (rightMotorSpeedT < rightMotorSpeed)rightMotorSpeedT++;
     setMotor(1, leftMotorSpeedT);
     setMotor(2, rightMotorSpeedT);
   }
