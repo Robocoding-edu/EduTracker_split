@@ -23,16 +23,16 @@ slam_toolbox:
     # Scan Matcher - максимальная точность
     use_scan_matching: true
     scan_match_space_dim: 2
-    minimum_time_interval: 0.1
+    minimum_time_interval: 0.05
 
     # Параметры для высокой точности (требует больше CPU)
     throttle_scans: 1               # Обрабатывать ВСЕ сканы (макс. точность)
-    resolution: 0.05                # Пиксель 5 см (высокое разрешение)
+    resolution: 0.03                # Пиксель 5 см (высокое разрешение)
     max_laser_range: 12.0           # Максимальная дальность лазера
     max_num_nodes: 2000             # Больше узлов для точной карты
 
     # Параметры оптимизации графа
-    use_loop_closure: false
+    use_loop_closure: true
     loop_closure_threshold: 0.5
     loop_closure_maximum_distance: 5.0
     loop_closure_maximum_angle: 0.5
