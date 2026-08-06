@@ -94,7 +94,7 @@ local_costmap:
                  [-0.047, -0.150],
                  [0.059, -0.106]]"
 
-    footprint_padding: 0.01
+    footprint_padding: 0.00
 
     global_frame: odom
 
@@ -144,7 +144,7 @@ global_costmap:
                  [-0.047, -0.150],
                  [0.059, -0.106]]"
 
-    footprint_padding: 0.01
+    footprint_padding: 0.00
 
     resolution: 0.03
 
