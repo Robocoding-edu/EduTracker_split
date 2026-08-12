@@ -47,10 +47,14 @@ const int pinBIN2 = 10;
 const int pinPWMB = 11;
 
 // --- КОНФИГУРАЦИЯ ПИНОВ ЭНКОДЕРОВ (ПО СХЕМЕ) ---
+
+
 const int pinEncLeftA = 3;   // J8 пин 3
 const int pinEncLeftB = 15;  // J8 пин 4
+
 const int pinEncRightA = 2;  // J1 пин 3
 const int pinEncRightB = 14; // J1 пин 4
+
 
 // --- КОНФИГУРАЦИЯ СЕРВОПРИВОДОВ КАМЕРЫ ---
 const int pinServoLeft = 5;   // Левая серва дифференциала
