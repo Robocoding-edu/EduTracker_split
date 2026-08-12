@@ -37,7 +37,6 @@ ROBOT_DESCRIPTION_PID=$!
 sleep 2
 
 echo "=== 2. Запуск драйвера лидара с автореанимацией ==="
-cp ./lidar.launch.py /data/install/ldlidar_stl_ros2/share/ldlidar_stl_ros2
 (
     while true; do
         ros2 launch ldlidar_stl_ros2 lidar.launch.py

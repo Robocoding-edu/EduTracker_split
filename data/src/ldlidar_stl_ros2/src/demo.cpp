@@ -2,8 +2,8 @@
  * @file main.cpp
  * @author LDRobot (support@ldrobot.com)
  * @brief  main process App
- *         This code is only applicable to LDROBOT LiDAR LD06 products 
- * sold by Shenzhen LDROBOT Co., LTD    
+ *         This code is only applicable to LDROBOT LiDAR LD06 products
+ * sold by Shenzhen LDROBOT Co., LTD
  * @version 0.1
  * @date 2021-10-28
  *
@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
   setting.enable_angle_crop_func = false;
   setting.angle_crop_min = 0.0;
   setting.angle_crop_max = 0.0;
-  
+
   // declare ros2 param
   node->declare_parameter<std::string>("product_name", product_name);
   node->declare_parameter<std::string>("topic_name", topic_name);
@@ -83,12 +83,14 @@ int main(int argc, char **argv) {
     type_name = ldlidar::LDType::LD_19;
   } else if (product_name == "LDLiDAR_STL27L") {
     type_name = ldlidar::LDType::STL_27L;
+  } else if (product_name == "STL_06P"){
+      type_name = ldlidar:LDType::STL_06P;
   } else {
     RCLCPP_ERROR(node->get_logger(), "Error, input <product_name> is illegal.");
     exit(EXIT_FAILURE);
   }
 
-  ldlidarnode->RegisterGetTimestampFunctional(std::bind(&GetSystemTimeStamp)); 
+  ldlidarnode->RegisterGetTimestampFunctional(std::bind(&GetSystemTimeStamp));
 
   ldlidarnode->EnableFilterAlgorithnmProcess(true);
 
@@ -107,9 +109,9 @@ int main(int argc, char **argv) {
   }
 
   // create ldlidar data topic and publisher
-  rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr publisher = 
+  rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr publisher =
       node->create_publisher<sensor_msgs::msg::LaserScan>(topic_name, 10);
-  
+
   rclcpp::WallRate r(10); //10hz
 
   ldlidar::Points2D laser_scan_points;
@@ -117,7 +119,7 @@ int main(int argc, char **argv) {
   RCLCPP_INFO(node->get_logger(), "Publish topic message:ldlidar scan data.");
   while (rclcpp::ok()) {
     switch (ldlidarnode->GetLaserScanData(laser_scan_points, 1500)){
-      case ldlidar::LidarStatus::NORMAL: 
+      case ldlidar::LidarStatus::NORMAL:
         ldlidarnode->GetLidarScanFreq(lidar_scan_freq);
         ToLaserscanMessagePublish(laser_scan_points, lidar_scan_freq, setting, node, publisher);
         break;
@@ -188,11 +190,11 @@ void  ToLaserscanMessagePublish(ldlidar::Points2D& src,  double lidar_spin_freq,
     output.intensities.assign(beam_size, std::numeric_limits<float>::quiet_NaN());
     for (auto point : src) {
       float range = point.distance / 1000.f;  // distance unit transform to meters
-      float intensity = point.intensity;      // laser receive intensity 
+      float intensity = point.intensity;      // laser receive intensity
       float dir_angle = point.angle;
 
       if ((point.distance == 0) && (point.intensity == 0)) { // filter is handled to  0, Nan will be assigned variable.
-        range = std::numeric_limits<float>::quiet_NaN(); 
+        range = std::numeric_limits<float>::quiet_NaN();
         intensity = std::numeric_limits<float>::quiet_NaN();
       }
 
@@ -207,7 +209,7 @@ void  ToLaserscanMessagePublish(ldlidar::Points2D& src,  double lidar_spin_freq,
       int index = static_cast<int>(ceil((angle - angle_min) / angle_increment));
       if (index < beam_size) {
         if (index < 0) {
-          RCLCPP_ERROR(node->get_logger(), "error index: %d, beam_size: %d, angle: %f, output.angle_min: %f, output.angle_increment: %f", 
+          RCLCPP_ERROR(node->get_logger(), "error index: %d, beam_size: %d, angle: %f, output.angle_min: %f, output.angle_increment: %f",
             index, beam_size, angle, angle_min, angle_increment);
         }
 
@@ -239,11 +241,11 @@ void  ToLaserscanMessagePublish(ldlidar::Points2D& src,  double lidar_spin_freq,
     }
     lidarpub->publish(output);
     end_scan_time = start_scan_time;
-  } 
+  }
 }
 
 uint64_t GetSystemTimeStamp(void) {
-  std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp = 
+  std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp =
     std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now());
   auto tmp = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch());
   return ((uint64_t)tmp.count());

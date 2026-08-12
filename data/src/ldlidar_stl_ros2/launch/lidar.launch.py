@@ -27,10 +27,10 @@ def generate_launch_description():
     ldlidar_node = Node(
         package="ldlidar_stl_ros2",
         executable="ldlidar_stl_ros2_node",
-        name="LD19",
+        name="STL_06P",
         output="screen",
         parameters=[
-            {"product_name": "LDLiDAR_LD19"},
+            {"product_name": "STL_06P"},
             {"topic_name": "scan"},
             {"frame_id": "laser_link"},
             {"port_name": "/dev/sensors/lidar"},
