@@ -36,9 +36,12 @@ float currentLinear = 0;
 float currentAngular = 0;
 
 // --- КОНФИГУРАЦИЯ ПИНОВ МОТОРОВ КОЛЕС (Уже настроено) ---
+//A - Right
 const int pinPWMA = 8;
 const int pinAIN2 = 7;
 const int pinAIN1 = 6;
+
+//B - Left
 const int pinBIN1 = 9;
 const int pinBIN2 = 10;
 const int pinPWMB = 11;
