@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
   } else if (product_name == "LDLiDAR_STL27L") {
     type_name = ldlidar::LDType::STL_27L;
   } else if (product_name == "STL_06P"){
-      type_name = ldlidar:LDType::STL_06P;
+      type_name = ldlidar::LDType::STL_06P;
   } else {
     RCLCPP_ERROR(node->get_logger(), "Error, input <product_name> is illegal.");
     exit(EXIT_FAILURE);
