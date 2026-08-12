@@ -27,16 +27,16 @@ def generate_launch_description():
     ldlidar_node = Node(
         package="ldlidar_stl_ros2",
         executable="ldlidar_stl_ros2_node",
-        name="LD06",
+        name="LD19",
         output="screen",
         parameters=[
-            {"product_name": "LDLiDAR_LD06"},
+            {"product_name": "LDLiDAR_LD19"},
             {"topic_name": "scan"},
             {"frame_id": "laser_link"},
             {"port_name": "/dev/sensors/lidar"},
             {"port_baudrate": 230400},
             {"laser_scan_dir": True},
-            {"enable_angle_crop_func": False},
+            {"enable_angle_crop_func": False}
         ],
     )
 
